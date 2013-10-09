@@ -1,8 +1,27 @@
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
+int main( int argc, char *argv[]){
+  if(argc != 2 ){
+        printf( "usage: %s filename", argv[0] );
+    } else {
+        FILE *file = fopen( argv[1], "r" );
+
+        if ( file == 0){
+            printf( "Could not open file\n" );
+        } else {
+            int x;
+            while  ( ( x = fgetc( file ) ) != EOF ) {
+                printf( "%c", x );
+            }
+            fclose( file );
+        }
+    }
+}
+
 //Returns 1 if input character is a vowel
-int is_vowel( char c){
+int is_vowel( char *c){
   int result;
   if ( c == 'A' || c == 'a' || c == 'E' || c == 'e' || c == 'I' ||  c == 'i' ||        c == 'O' ||  c == 'o' ||  c == 'U' ||  c == 'u'){
     result = 1;
@@ -17,14 +36,25 @@ int is_vowel( char c){
 void disemvowel(int argc, char *argv[]){
   //read file, write to standard output
   if (argc == 1){
-    FILE *file = fopen( arg[0], "r");
-    int x;
+    FILE *file = fopen( argv[0], "r");
+
+    int x, consCount, i, j, length;
+    char* result;
+    
     while ( ( x = fgetc( file ) ) != EOF ){
-      if (is_vowel(%c) == 0){
-	
+      if (is_vowel("%c") == 0){
+	consCount++;
+	printf("%c", x);
       }
+      length++;
     }
+    //    result = calloc(consCount, sizeof(char));
+    // j = 0;
+    //for(i = 0; i < length; i++){
+      
+    // }
   }
+
   //read file, write to file
   else if(argc == 2){
     
