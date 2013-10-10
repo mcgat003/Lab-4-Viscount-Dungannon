@@ -1,66 +1,73 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <stdio.h>
+#include "file_disemvowel.h"
+#define BUF_SIZE 1024
 
-int main( int argc, char *argv[]){
-  if(argc != 2 ){
-        printf( "usage: %s filename", argv[0] );
-    } else {
-        FILE *file = fopen( argv[1], "r" );
-
-        if ( file == 0){
-            printf( "Could not open file\n" );
-        } else {
-            int x;
-            while  ( ( x = fgetc( file ) ) != EOF ) {
-                printf( "%c", x );
-            }
-            fclose( file );
-        }
-    }
-}
-
-//Returns 1 if input character is a vowel
-int is_vowel( char *c){
+//Returns true if input character is a vowel
+bool is_vowel( char *c){
   int result;
-  if ( c == 'A' || c == 'a' || c == 'E' || c == 'e' || c == 'I' ||  c == 'i' ||        c == 'O' ||  c == 'o' ||  c == 'U' ||  c == 'u'){
-    result = 1;
+  if ( c == 'A' || c == 'a' || c == 'E' || c == 'e' || c == 'I' ||  c == 'i' || c == 'O' ||  c == 'o' ||  c == 'U' ||  c == 'u'){
+    return true;
   }
   else { 
-    result = 0;
+    return false;
   }
-  return result;
 }
 
-//Main disemvowel method
-void disemvowel(int argc, char *argv[]){
-  //read file, write to standard output
-  if (argc == 1){
-    FILE *file = fopen( argv[0], "r");
-
-    int x, consCount, i, j, length;
-    char* result;
-    
-    while ( ( x = fgetc( file ) ) != EOF ){
-      if (is_vowel("%c") == 0){
-	consCount++;
-	printf("%c", x);
-      }
-      length++;
+int copy_non_vowels(int num_chars, char* in_buf, char*  out_buf){
+  int counter = 0;
+  int i = 0;
+  for(i ; i < num_chars ; i++){
+    if(is_vowel(in_buf[i] == false)){
+      out_buf[counter] = in_buf[i];
+      counter++; 
     }
-    //    result = calloc(consCount, sizeof(char));
-    // j = 0;
-    //for(i = 0; i < length; i++){
-      
-    // }
   }
+  return counter;
+} 
 
-  //read file, write to file
-  else if(argc == 2){
-    
-  }
-  //read standard input, write to standard output?
-  else{
-
-  }
+void disemvowel(FILE* input, FILE* output){
+  int size = 0;
+  char* in_buf = calloc(BUF_SIZE, sizeof(char));
+  
 }
+
+int main( int argc, char *argv[]){
+  FILE *input, *output;
+
+
+  //read from input file, write to output file
+  if(argc == 3 ){
+    input = fopen( argv[1], "r" );
+    output = fopen( argv[2], "w");
+    if (input == 0){
+      printf( "Could not open input file\n");
+    }if (output == 0){
+      printf( "Could not open output file\n");
+  //reads from a single file, writes to standard output  
+  } 
+  }else if (argc == 2){
+      input = fopen( argv[1], "r" );
+      if ( input == 0){
+          printf( "Could not open input file\n" );
+      }input = fopen(argv[1], "r");
+       output = stdout;
+  //reads from standard input, reads from standard output
+  }else{
+    input = stdin;
+    output = stdout;         
+        }
+  disemvowel(input, output);
+  fclose(input);
+  fclose(output);
+  return 0;
+    }
+
+
+
+
+
+
+
